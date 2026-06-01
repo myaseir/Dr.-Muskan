@@ -1,81 +1,262 @@
-import Link from "next/link";
+"use client";
+import React from 'react';
+import Link from 'next/link';
 
 export default function AboutPage() {
   return (
-    <main className="min-h-screen bg-white pt-20">
-      {/* Editorial Header */}
-      <section className="bg-zinc-950 text-zinc-200 py-32 px-4 text-center relative overflow-hidden">
-        <div className="absolute inset-0 opacity-10 bg-[url('https://www.transparenttextures.com/patterns/carbon-fibre.png')] pointer-events-none"></div>
+    <main style={{ minHeight: "100vh", background: "#ffffff", fontFamily: "'DM Sans', sans-serif" }}>
+      
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400;1,600;1,700&family=DM+Sans:wght@300;400;500;700&display=swap');
+
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        :root {
+          --teal: #0d756d;
+          --teal-light: #e8f4f3;
+          --teal-dark: #094e49;
+          --cream: #f8f7f4;
+          --ink: #111827;
+          --muted: #6b7280;
+          --border: #e5e2db;
+        }
+
+        /* ─── BANNER HEADER (EXTENDED UNDER NAVBAR FOR SEO) ─── */
+        .about-hero {
+          position: relative;
+          background: #0b1f1e;
+          padding: 160px 24px 100px;
+          text-align: center;
+          overflow: hidden;
+        }
+
+        .hero-bg-blend {
+          position: absolute;
+          inset: 0;
+          background: radial-gradient(ellipse 80% 60% at 50% 0%, rgba(13,117,109,0.35) 0%, transparent 70%);
+        }
+
+        .about-hero h1 {
+          position: relative;
+          font-family: 'Cormorant Garamond', serif;
+          font-size: clamp(36px, 6vw, 64px);
+          font-weight: 600;
+          color: #fff;
+          margin-bottom: 16px;
+          letter-spacing: -0.01em;
+        }
+
+        .about-hero h1 em {
+          font-style: italic;
+          color: #5ecdc6;
+        }
+
+        .about-hero p {
+          position: relative;
+          font-size: clamp(14px, 2vw, 16px);
+          font-weight: 300;
+          color: rgba(255,255,255,0.55);
+          max-width: 580px;
+          margin: 0 auto;
+          line-height: 1.6;
+        }
+
+        /* ─── NARRATIVE GRID SECTION ─── */
+        .content-section {
+          padding: 60px 24px;
+          max-width: 1200px;
+          margin: 0 auto;
+          display: grid;
+          grid-template-columns: 1fr;
+          gap: 48px;
+          align-items: center;
+        }
+
+        @media (min-width: 1024px) {
+          .content-section {
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            padding: 100px 24px;
+          }
+        }
+
+        .image-wrapper {
+          position: relative;
+          height: clamp(350px, 50vh, 600px);
+          w-full;
+          overflow: hidden;
+          box-shadow: 0 20px 40px rgba(0,0,0,0.04);
+          background: var(--cream);
+          border-radius: 4px;
+          border: 1px solid var(--border);
+        }
+
+        .image-wrapper img {
+          object-fit: cover;
+          width: 100%;
+          height: 100%;
+          transition: transform 0.7s ease-in-out;
+        }
+
+        .image-wrapper:hover img {
+          transform: scale(1.02);
+        }
+
+        .border-accent {
+          position: absolute;
+          inset: 0;
+          border: 15px solid rgba(255,255,255,0.1);
+          margin: 16px;
+          pointer-events: none;
+        }
+
+        /* ─── TEXT BLOCK STYLING ─── */
+        .narrative-block {
+          display: flex;
+          flex-direction: column;
+          align-items: flex-start;
+        }
+
+        .narrative-block h4 {
+          text-transform: uppercase;
+          font-size: 10px;
+          letter-spacing: 0.25em;
+          color: var(--teal);
+          font-weight: 700;
+          margin-bottom: 12px;
+        }
+
+        .narrative-block h2 {
+          font-family: 'Cormorant Garamond', serif;
+          font-size: clamp(28px, 4vw, 44px);
+          font-weight: 600;
+          color: var(--ink);
+          line-height: 1.25;
+          margin-bottom: 24px;
+        }
+
+        .narrative-block h2 em {
+          font-style: italic;
+          font-weight: 400;
+        }
+
+        .paragraph-stack {
+          display: flex;
+          flex-direction: column;
+          gap: 20px;
+        }
+
+        .paragraph-stack p {
+          font-size: 15.5px;
+          font-weight: 300;
+          line-height: 1.75;
+          color: var(--muted);
+        }
+
+        .btn-action {
+          display: inline-block;
+          margin-top: 36px;
+          padding: 14px 32px;
+          background: var(--teal);
+          color: #fff;
+          font-size: 11px;
+          font-weight: 500;
+          letter-spacing: 0.18em;
+          text-transform: uppercase;
+          text-decoration: none;
+          border-radius: 2px;
+          box-shadow: 0 4px 14px rgba(13,117,109,0.15);
+          transition: background 0.25s, transform 0.15s;
+        }
+
+        .btn-action:hover {
+          background: var(--teal-dark);
+          transform: translateY(-1px);
+        }
+
+        /* ─── CLINICAL STATEMENT SIGN-OFF ─── */
+        .statement-strip {
+          background: var(--cream);
+          border-top: 1px solid var(--border);
+          border-b: 1px solid var(--border);
+          padding: 80px 24px;
+          text-align: center;
+        }
+
+        .statement-strip p {
+          font-family: 'Cormorant Garamond', serif;
+          font-size: clamp(20px, 3vw, 28px);
+          font-style: italic;
+          color: var(--ink);
+          max-width: 800px;
+          margin: 0 auto 20px;
+          line-height: 1.5;
+        }
+
+        .statement-strip span {
+          font-size: 9.5px;
+          letter-spacing: 0.3em;
+          text-transform: uppercase;
+          color: var(--teal);
+          font-weight: 700;
+        }
+      `}</style>
+
+      {/* ── BANNER HEADER ── */}
+      <section className="about-hero">
+        <div className="hero-bg-blend" />
+        <h1>Our <em>Clinical Story</em></h1>
+        <p>
+          Discover the evidence-based medical philosophy guiding Lahore's premier outpatient physical rehabilitation and non-surgical pain management setup.
+        </p>
+      </section>
+
+      {/* ── NARRATIVE GRID SECTION ── */}
+      <section className="content-section">
         
-        <div className="relative z-10 max-w-4xl mx-auto">
-          <span className="text-rose-800 text-[10px] md:text-xs tracking-[0.5em] font-bold uppercase mb-6 block">
-            Our Story
-          </span>
-          <h1 className="text-5xl md:text-7xl font-serif text-white mb-8 italic tracking-tighter">
-            Defined by Panache
-          </h1>
-          <p className="max-w-2xl mx-auto font-light leading-relaxed text-zinc-400 text-lg md:text-xl italic">
-            Discover the artistry behind Lahore's premier luxury bridal and beauty sanctuary.
-          </p>
+        {/* High-Reliability Clean Medical Image */}
+        <div className="image-wrapper">
+          <img 
+            src="https://images.unsplash.com/photo-1576091160550-2173dba999ef?auto=format&fit=crop&q=80&w=1000" 
+            alt="Dr. Muskan Physical Therapy and Rehabilitation Clinic Room" 
+          />
+          <div className="border-accent"></div>
         </div>
-      </section>
 
-      {/* Content Section */}
-      <section className="py-24 px-6 sm:px-8 lg:px-12 max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-24 items-center">
+        {/* Brand Narrative */}
+        <div className="narrative-block">
+          <h4>Clinical Practice Overview</h4>
+          <h2>Evidence-Based Care &amp; <em>Kinetic Restoration</em></h2>
           
-          {/* High-Reliability Editorial Image */}
-          <div className="relative h-[500px] md:h-[700px] w-full overflow-hidden shadow-2xl group bg-zinc-100">
-            <img 
-              src="https://images.unsplash.com/photo-1596704017254-9b121068fb31?auto=format&fit=crop&q=80&w=1000" 
-              alt="Luxury Beauty Artistry" 
-              className="object-cover w-full h-full grayscale group-hover:grayscale-0 transition-all duration-1000 ease-in-out"
-            />
-            <div className="absolute inset-0 border-[20px] border-white/5 m-6"></div>
+          <div className="paragraph-stack">
+            <p>
+              Dr. Muskan Pain Management &amp; Physiotherapy Clinic is a highly specialized outpatient medical sanctuary dedicated to identifying and eliminating the root mechanical causes of chronic musculoskeletal and neuropathic ailments. 
+            </p>
+            <p>
+              We firmly believe that sustainable recovery requires looking past localized surface symptoms. By conducting thorough kinetic examinations, diagnostic record reviews, and personalized functional mapping protocols, we build highly specialized recovery roadmaps tailored to individual recovery timelines.
+            </p>
+            <p>
+              Operating directly out of Jail Road, Lahore, our clinic merges hands-on manual adjustment techniques, clinical electrotherapy modalities, and evidence-based exercise setups within a professional environment centered entirely around absolute patient wellbeing.
+            </p>
           </div>
 
-          {/* Brand Narrative */}
-          <div className="flex flex-col items-start">
-            <h4 className="text-rose-900 text-[11px] tracking-[0.3em] uppercase font-bold mb-4">
-              The Numra Philosophy
-            </h4>
-            <h2 className="text-4xl md:text-5xl font-serif text-zinc-900 mb-8 italic leading-tight">
-              Harmony, Tone & <br/> Individual Beauty
-            </h2>
-            
-            <div className="space-y-6 text-zinc-600 font-light text-lg leading-relaxed">
-              <p>
-                NUMRA is an exclusive sanctuary where we focus on enhancing the most unique features of your face. We believe beauty is found in the perfect harmony between color and tone, kept relevant to your most special occasions.
-              </p>
-              <p>
-                We pay close attention to our clients’ needs, fulfilling them with great panache. From the precision of our bridal services to the technical excellence of our hair treatments, our definitive finishing ensures you stand out from the crowd with the individuality you desire.
-              </p>
-            </div>
-
-            <div className="mt-12 flex flex-col sm:flex-row gap-6 items-center">
-              <Link 
-                href="/bridal" 
-                className="px-10 py-4 bg-zinc-900 hover:bg-rose-900 text-white text-[11px] tracking-[0.3em] uppercase font-bold transition-all duration-500 shadow-xl"
-              >
-                Explore Portfolio
-              </Link>
-              <span className="text-[9px] tracking-widest uppercase text-zinc-400">
-                Digital Experience by <span className="text-zinc-900 font-bold">Glacia Labs</span>
-              </span>
-            </div>
-          </div>
+          <Link href="/treatments" className="btn-action">
+            Explore Treatments
+          </Link>
         </div>
+
       </section>
 
-      {/* Signature Quote */}
-      <section className="bg-zinc-50 py-24 px-6 text-center">
+      {/* ── CLINICAL STATEMENT SIGN-OFF ── */}
+      <section className="statement-strip">
         <div className="max-w-3xl mx-auto">
-          <p className="text-2xl md:text-3xl font-serif italic text-zinc-900 leading-relaxed mb-6">
-            "Our definitive finishing will give you the individuality you desire and let you stand out from the crowd."
+          <p>
+            "Our core objective is to dismantle structural pain patterns, restore lost mechanical alignment, and actively empower you to navigate life completely free of discomfort."
           </p>
-          <span className="text-[10px] tracking-[0.4em] uppercase text-rose-900 font-bold">The Numra Promise</span>
+          <span>The Clinical Promise</span>
         </div>
       </section>
+
     </main>
   );
 }
